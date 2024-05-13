@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 
@@ -8,9 +9,10 @@ public class LetterChange : MonoBehaviour
     public TextMeshProUGUI[] textMeshes; 
     private int currentTextIndex = 0; 
     private char[] currentLetters = new char[3]; 
-    private const float scrollSpeed = 0.5f; 
+    private float scrollSpeed = 0.5f; 
     private bool scrolling = false; 
-    private bool nameConfirmed = false;
+    public bool nameConfirmed = false;
+    BlinkingLetter blscript;
 
     void Start()
     {
@@ -20,22 +22,24 @@ public class LetterChange : MonoBehaviour
             currentLetters[i] = 'A';
             UpdateText(i);
         }
+        blscript = GetComponent<BlinkingLetter>();
+        blscript.currentText = textMeshes[currentTextIndex];
     }
 
     void Update()
     {
         if (nameConfirmed)
         {
-            return; 
+            return;
         }
 
         if (Input.GetKeyDown(KeyCode.W) && !scrolling)
         {
-            ScrollLetters(1); 
+            ScrollLetters(1);
         }
         else if (Input.GetKeyDown(KeyCode.S) && !scrolling)
         {
-            ScrollLetters(-1); 
+            ScrollLetters(-1);
         }
         else if (Input.GetKeyDown(KeyCode.Return) && !nameConfirmed)
         {
@@ -48,6 +52,7 @@ public class LetterChange : MonoBehaviour
                 else
                 {
                     Debug.Log("Moved to next");
+                    blscript.currentText.enabled = true;
                     LockLetterAndMoveToNext();
                 }
             }
@@ -59,6 +64,7 @@ public class LetterChange : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Backspace) && !nameConfirmed)
         {
             Debug.Log("Moved to previous");
+            blscript.currentText.enabled = true;
             MoveToPreviousLetter();
         }
         if (Input.GetKeyDown(KeyCode.Return) && nameConfirmed)
@@ -71,6 +77,7 @@ public class LetterChange : MonoBehaviour
             nameConfirmed = false;
             currentTextIndex = 0;
         }
+        
     }
 
     void ScrollLetters(int direction)
@@ -79,13 +86,21 @@ public class LetterChange : MonoBehaviour
 
         if (targetLetter > 'Z')
         {
+            print("switch to a");
+            scrollSpeed = 0;
             targetLetter = 'A';
         }
         else if (targetLetter < 'A')
         {
+            print("Switch to z");
+            scrollSpeed = 0;
             targetLetter = 'Z';
         }
-
+        else
+        {
+            scrollSpeed = 0.5f;
+        }
+       
         StartCoroutine(ScrollToLetter(targetLetter));
     }
 
@@ -104,7 +119,7 @@ public class LetterChange : MonoBehaviour
             {
                 currentLetters[currentTextIndex]--;
             }
-
+            print(targetLetter);
             UpdateText(currentTextIndex); 
 
             yield return new WaitForSeconds(scrollSpeed); 
@@ -116,6 +131,7 @@ public class LetterChange : MonoBehaviour
     void LockLetterAndMoveToNext()
     {
         currentTextIndex++;
+        blscript.currentText = textMeshes[currentTextIndex];
         if (currentTextIndex >= textMeshes.Length)
         {
             currentTextIndex = 0; 
@@ -130,9 +146,9 @@ public class LetterChange : MonoBehaviour
         {
             previousLetter = 'Z';
         }
-        else
+        else if (previousLetter == 'Z')
         {
-            previousLetter--;
+            previousLetter = 'A';
         }
 
         StartCoroutine(ScrollToLetter(previousLetter));
@@ -140,7 +156,7 @@ public class LetterChange : MonoBehaviour
 
     void UpdateText(int index)
     {
-        textMeshes[index].text = currentLetters[index].ToString(); 
+        textMeshes[index].text = currentLetters[index].ToString();
     }
 
     void ConfirmName()
