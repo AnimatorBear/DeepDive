@@ -14,10 +14,11 @@ public class DriveController : MonoBehaviour
 
     private float horizontal;
     private float vertical;
-    float moveSpeed = 5;
-    
-    
-    
+    public float moveSpeed = 5f;
+    public float rotationSpeed = 100f;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +28,10 @@ public class DriveController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         vertical = Input.GetAxis("Horizontal");
         horizontal = Input.GetAxis("Vertical");
+        
         Vector3 velocity = (transform.forward * vertical) * moveSpeed * Time.fixedDeltaTime;
         float newSpeed = moveSpeed;
         if (newSpeed > 0)
@@ -48,6 +51,19 @@ public class DriveController : MonoBehaviour
         }
         velocity.y = rb.velocity.y;
         rb.velocity = velocity;
+        */
+
+        horizontal = Input.GetAxis("Horizontal");
+        vertical = Input.GetAxis("Vertical");
+
+
+        Vector3 moveDirection = transform.forward * vertical;
+        Vector3 rotationDirection = transform.up * horizontal;
+
+        transform.Rotate(rotationDirection * rotationSpeed * Time.deltaTime);
+
+ 
+        rb.velocity = moveDirection * moveSpeed;
 
     }
 }
