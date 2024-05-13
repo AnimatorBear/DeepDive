@@ -9,19 +9,13 @@ public class InputTestScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = transform.parent.gameObject.GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerInput.actions["TestAction"].triggered)
-        {
-            print("Hi");
-        }
-        if (playerInput.actions["TestPosNeg"].ReadValue<float>() != 0)
-        {
-            print(playerInput.actions["TestPosNeg"].ReadValue<float>());
-        }
+        float minus = 5;
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x + (playerInput.actions["CamUp"].ReadValue<float>() / minus), transform.localEulerAngles.y + (playerInput.actions["CamLeft"].ReadValue<float>() / minus), transform.localEulerAngles.z);
     }
 }
