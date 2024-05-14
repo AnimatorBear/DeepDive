@@ -16,11 +16,17 @@ public class LapComplete : MonoBehaviour
 	public GameObject LapTimeBox;
 
 	public GameObject LapCounter;
-	public int lapsDone;
 
-	void OnTriggerEnter()
+	public GameObject miniMap;
+	public GameObject HUD;
+	public GameObject Finish;
+
+	public static int lapsDone;
+
+    public void OnTriggerEnter()
 	{
-		lapsDone++;
+		
+		
 		if (LapTimeManager.SecondCount <= 9)
 		{
 			SecondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.SecondCount + ".";
@@ -50,5 +56,6 @@ public class LapComplete : MonoBehaviour
 		HalfLapTrig.SetActive(true);
 		LapCompleteTrig.SetActive(false);
 	}
+
 
 }

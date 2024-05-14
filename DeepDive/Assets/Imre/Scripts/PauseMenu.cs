@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject settingsMenu;
     public GameObject miniMap;
+    public GameObject HUD;
     public bool isPaused = false;
     public AudioMixer audioMixer;
 
@@ -54,6 +55,14 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
+        }
+        if (isPaused)
+        {
+            HUD.SetActive(false);
+        }
+        else
+        {
+            HUD.SetActive(true);
         }
     }
 
