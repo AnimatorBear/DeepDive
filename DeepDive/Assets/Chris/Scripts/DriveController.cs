@@ -42,18 +42,29 @@ public class DriveController : MonoBehaviour
         horizontal = playerInput.actions["SteeringWheel"].ReadValue<float>();
         vertical = playerInput.actions["GasBrake"].ReadValue<float>();
 
-        for (int i = 0; i < wheel_col.Length; i++)
+        if(rb.velocity.z < maxspeed)
         {
-            wheel_col[i].motorTorque = vertical * moveSpeed;
-            if (i == 0 || i == 2)
+            print("You good bro");
+            print(rb.velocity.z);
+            for (int i = 0; i < wheel_col.Length; i++)
             {
-                wheel_col[i].steerAngle = horizontal * rotationSpeed;
+                wheel_col[i].motorTorque = vertical * moveSpeed;
+                if (i == 0 || i == 2)
+                {
+                    wheel_col[i].steerAngle = horizontal * rotationSpeed;
+                }
+                var pos = transform.position;
+                var rot = transform.rotation;
+                wheel_col[i].GetWorldPose(out pos, out rot);
+                wheels[i].position = pos;
+                wheels[i].rotation = rot;
             }
-            var pos = transform.position;
-            var rot = transform.rotation;
-            wheel_col[i].GetWorldPose(out pos, out rot);
-            wheels[i].position = pos;
-            wheels[i].rotation = rot;
+        }
+        else
+        {
+            print("Too fast!");
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxspeed);
+            print(rb.velocity.z);
         }
 
 
