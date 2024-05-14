@@ -8,7 +8,8 @@ public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject settingsMenu;
-    private bool isPaused = false;
+    public GameObject miniMap;
+    public bool isPaused = false;
     public AudioMixer audioMixer;
 
     Resolution[] resolutions;
@@ -99,5 +100,10 @@ public class PauseMenu : MonoBehaviour
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
+    }
+
+    public void ToggleMap(bool isMapEnable)
+    {
+        miniMap.SetActive(isMapEnable);
     }
 }
