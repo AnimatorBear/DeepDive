@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReverseManual",
+                    "type": "Button",
+                    "id": "e62b32b0-a033-4890-a456-0141e5eafb59",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -463,6 +472,28 @@
                     "action": "CamLeft",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "07835b9e-3c97-49a3-9e5c-25504cd11581",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Manual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54798d1f-e6e7-4dd5-945c-b7e3c3132e89",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReverseManual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
