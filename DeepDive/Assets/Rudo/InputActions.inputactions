@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReverseManual",
+                    "type": "Button",
+                    "id": "e62b32b0-a033-4890-a456-0141e5eafb59",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -301,39 +310,6 @@
                 },
                 {
                     "name": "Wheel",
-                    "id": "289ddeb5-9579-4a0d-b9f4-2d9c1475d96d",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Manual",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "0b5287ba-8bb9-4558-8f04-e99bfbc2e218",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Manual",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "f1bb8e64-fc64-40f6-a9d9-bf40f42ffb84",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Manual",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Wheel",
                     "id": "246f23a9-eee4-4943-a9df-ef347c9d2d36",
                     "path": "1DAxis",
                     "interactions": "",
@@ -397,6 +373,28 @@
                     "action": "CamLeft",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "07835b9e-3c97-49a3-9e5c-25504cd11581",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Manual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54798d1f-e6e7-4dd5-945c-b7e3c3132e89",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReverseManual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
