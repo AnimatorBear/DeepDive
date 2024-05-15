@@ -30,7 +30,7 @@ public class CartTest : MonoBehaviour
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
-        //GetComponent<Rigidbody>().centerOfMass = centerOfMass;
+        GetComponent<Rigidbody>().centerOfMass = centerOfMass;
     }
     // Visual updates
     void Update()
