@@ -44,8 +44,6 @@ public class DriveController : MonoBehaviour
 
         if(rb.velocity.z < maxspeed)
         {
-            print("You good bro");
-            print(rb.velocity.z);
             for (int i = 0; i < wheel_col.Length; i++)
             {
                 wheel_col[i].motorTorque = vertical * moveSpeed;
@@ -62,9 +60,7 @@ public class DriveController : MonoBehaviour
         }
         else
         {
-            print("Too fast!");
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, maxspeed);
-            print(rb.velocity.z);
         }
 
 
