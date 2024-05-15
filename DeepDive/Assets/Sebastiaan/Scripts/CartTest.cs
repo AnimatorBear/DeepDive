@@ -27,6 +27,13 @@ public class CartTest : MonoBehaviour
     public float torquePower = 0f;
     public float steerAngle = 30f;
 
+
+
+    public float maxspeed;
+    public int[] shifts = { 0, 7, 13, 18, 24, 30, 44, 60 };
+    public int currentShift = 1;
+
+
     public Rigidbody rgb;
 
     [SerializeField] private PlayerInput playerInput;
@@ -42,6 +49,7 @@ public class CartTest : MonoBehaviour
     // Visual updates
     void Update()
     {
+       shifting();
         Vector3 temp = frontLeftWheelMesh.localEulerAngles;
         Vector3 temp1 = frontRightWheelMesh.localEulerAngles;
         temp.y = wheelFL.steerAngle - (frontLeftWheelMesh.localEulerAngles.z);
@@ -57,6 +65,8 @@ public class CartTest : MonoBehaviour
     // Physics updates
     void FixedUpdate()
     {
+        var temper = rgb.velocity.magnitude;
+        var temperi = rgb.velocity.x;
         // CONTROLS - FORWARD & RearWARD
         float brake = playerInput.actions["Brake"].ReadValue<float>();
         if (brake != 0 && rgb.velocity.x > 1)
@@ -80,6 +90,51 @@ public class CartTest : MonoBehaviour
         steerAngle = maxWheelTurnAngle * playerInput.actions["SteeringWheel"].ReadValue<float>();
         wheelFL.steerAngle = steerAngle;
         wheelFR.steerAngle = steerAngle;
+
+
+        float currentSpeed = rgb.velocity.magnitude;
+
+        // Check if the current speed exceeds the max speed
+        if (currentSpeed > maxspeed)
+        {
+            // Calculate the velocity direction
+            Vector3 velocityDirection = rgb.velocity.normalized;
+
+            // Set the velocity to the max speed in the same direction
+            rgb.velocity = velocityDirection * maxspeed;
+        }
+
+
+
+
+
+        Debug.LogWarning("x"+rgb.velocity.magnitude);
+        
+
+    }
+
+    public void shifting()
+    {
+
+        if (playerInput.actions["Manual"].triggered&& rgb.velocity.magnitude >= maxspeed - 8)
+        {
+            currentShift++;
+            if (currentShift >= shifts.Length)
+            {
+                currentShift = 0;
+            }
+            maxspeed = shifts[currentShift];
+        }
+        if (playerInput.actions["ReverseManual"].triggered)
+        {
+            currentShift--;
+            if (currentShift < 0)
+            {
+                currentShift = shifts.Length - 1;
+            }
+            maxspeed = shifts[currentShift];
+        }
+
     }
 
 }
