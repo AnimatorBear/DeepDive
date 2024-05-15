@@ -4,50 +4,50 @@ using UnityEngine.UI;
 public class LapTimeManager : MonoBehaviour
 {
 
-	public static int MinuteCount;
-	public static int SecondCount;
-	public static float MilliCount;
-	public static string MilliDisplay;
+	public static int minuteCount;
+	public static int secondCount;
+	public static float milliCount;
+	public static string milliDisplay;
 
-	public GameObject MinuteBox;
-	public GameObject SecondBox;
-	public GameObject MilliBox;
+	public GameObject minuteBox;
+	public GameObject secondBox;
+	public GameObject milliBox;
 
 
 	void Update()
 	{
-		MilliCount += Time.deltaTime * 10;
-		MilliDisplay = MilliCount.ToString("F0");
-		MilliBox.GetComponent<Text>().text = "" + MilliDisplay;
+		milliCount += Time.deltaTime * 10;
+		milliDisplay = milliCount.ToString("F0");
+		milliBox.GetComponent<Text>().text = "" + milliDisplay;
 
-		if (MilliCount >= 10)
+		if (milliCount >= 10)
 		{
-			MilliCount = 0;
-			SecondCount += 1;
+			milliCount = 0;
+			secondCount += 1;
 		}
 
-		if (SecondCount <= 9)
+		if (secondCount <= 9)
 		{
-			SecondBox.GetComponent<Text>().text = "0" + SecondCount + ".";
+			secondBox.GetComponent<Text>().text = "0" + secondCount + ".";
 		}
 		else
 		{
-			SecondBox.GetComponent<Text>().text = "" + SecondCount + ".";
+			secondBox.GetComponent<Text>().text = "" + secondCount + ".";
 		}
 
-		if (SecondCount >= 60)
+		if (secondCount >= 60)
 		{
-			SecondCount = 0;
-			MinuteCount += 1;
+			secondCount = 0;
+			minuteCount += 1;
 		}
 
-		if (MinuteCount <= 9)
+		if (minuteCount <= 9)
 		{
-			MinuteBox.GetComponent<Text>().text = "0" + MinuteCount + ":";
+			minuteBox.GetComponent<Text>().text = "0" + minuteCount + ":";
 		}
 		else
 		{
-			MinuteBox.GetComponent<Text>().text = "" + MinuteCount + ":";
+			minuteBox.GetComponent<Text>().text = "" + minuteCount + ":";
 		}
 
 	}

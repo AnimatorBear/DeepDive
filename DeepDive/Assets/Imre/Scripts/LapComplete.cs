@@ -6,20 +6,20 @@ using UnityEngine.UI;
 public class LapComplete : MonoBehaviour
 {
 
-	public GameObject LapCompleteTrig;
-	public GameObject HalfLapTrig;
+	public GameObject lapCompleteTrig;
+	public GameObject halfLapTrig;
 
-	public GameObject MinuteDisplay;
-	public GameObject SecondDisplay;
-	public GameObject MilliDisplay;
+	public GameObject minuteDisplay;
+	public GameObject secondDisplay;
+	public GameObject milliDisplay;
 
-	public GameObject LapTimeBox;
+	public GameObject lapTimeBox;
 
-	public GameObject LapCounter;
+	public GameObject lapCounter;
 
-	public GameObject miniMap;
-	public GameObject HUD;
-	public GameObject Finish;
+	//public GameObject miniMap;
+	//public GameObject HUD;
+	//public GameObject Finish;
 
 	public static int lapsDone = 1;
 
@@ -27,34 +27,34 @@ public class LapComplete : MonoBehaviour
 	{
 		
 		
-		if (LapTimeManager.SecondCount <= 9)
+		if (LapTimeManager.secondCount <= 9)
 		{
-			SecondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.SecondCount + ".";
+			secondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.secondCount + ".";
 		}
 		else
 		{
-			SecondDisplay.GetComponent<Text>().text = "" + LapTimeManager.SecondCount + ".";
+			secondDisplay.GetComponent<Text>().text = "" + LapTimeManager.secondCount + ".";
 		}
 
-		if (LapTimeManager.MinuteCount <= 9)
+		if (LapTimeManager.minuteCount <= 9)
 		{
-			MinuteDisplay.GetComponent<Text>().text = "0" + LapTimeManager.MinuteCount + ".";
+			minuteDisplay.GetComponent<Text>().text = "0" + LapTimeManager.minuteCount + ".";
 		}
 		else
 		{
-			MinuteDisplay.GetComponent<Text>().text = "" + LapTimeManager.MinuteCount + ".";
+			minuteDisplay.GetComponent<Text>().text = "" + LapTimeManager.minuteCount + ".";
 		}
 
-		MilliDisplay.GetComponent<Text>().text = "" + LapTimeManager.MilliCount;
+		milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
 
-		LapTimeManager.MinuteCount = 0;
-		LapTimeManager.SecondCount = 0;
-		LapTimeManager.MilliCount = 0;
+		LapTimeManager.minuteCount = 0;
+		LapTimeManager.secondCount = 0;
+		LapTimeManager.milliCount = 0;
 
-		LapCounter.GetComponent<Text>().text = "" + lapsDone;
+		lapCounter.GetComponent<Text>().text = "" + lapsDone;
 
-		HalfLapTrig.SetActive(true);
-		LapCompleteTrig.SetActive(false);
+		halfLapTrig.SetActive(true);
+		lapCompleteTrig.SetActive(false);
 	}
 
 

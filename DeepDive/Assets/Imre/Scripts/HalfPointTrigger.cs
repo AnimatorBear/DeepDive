@@ -31,7 +31,7 @@ public class HalfPointTrigger : MonoBehaviour
             miniMap.SetActive(false);
             HUD.SetActive(false);
             Finish.SetActive(true);
-            Player.GetComponent<DriveController>().enabled = false;
+            Player.GetComponent<CartTest>().enabled = false;
         }
     }
 }
