@@ -37,6 +37,11 @@ public class CartTest : MonoBehaviour
     public Rigidbody rgb;
 
     [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private float wheelHealth = 100f;
+    public enum wheelTypes {Soft,Medium,Hard}
+    public wheelTypes currentWheel;
+    public float wheelSpeed = 0;
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
@@ -95,13 +100,13 @@ public class CartTest : MonoBehaviour
         float currentSpeed = rgb.velocity.magnitude;
 
         // Check if the current speed exceeds the max speed
-        if (currentSpeed > maxspeed)
+        if (currentSpeed > (maxspeed + wheelSpeed))
         {
             // Calculate the velocity direction
             Vector3 velocityDirection = rgb.velocity.normalized;
 
             // Set the velocity to the max speed in the same direction
-            rgb.velocity = velocityDirection * maxspeed;
+            rgb.velocity = velocityDirection * (maxspeed + wheelSpeed);
         }
 
 
@@ -135,6 +140,26 @@ public class CartTest : MonoBehaviour
             maxspeed = shifts[currentShift];
         }
 
+    }
+
+    public void SwapWheels(wheelTypes wheel)
+    {
+        currentWheel = wheel;
+        switch (currentWheel)
+        {
+            case wheelTypes.Soft:
+                wheelHealth = 80;
+                wheelSpeed = 5;
+                break;
+            case wheelTypes.Medium:
+                wheelHealth = 100;
+                wheelSpeed = 3;
+                break;
+            case wheelTypes.Hard:
+                wheelHealth = 120;
+                wheelSpeed = 1;
+                break;
+        }
     }
 
 }
