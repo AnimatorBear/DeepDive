@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CartTest : MonoBehaviour
 {
@@ -27,10 +28,16 @@ public class CartTest : MonoBehaviour
     public float steerAngle = 30f;
 
     public Rigidbody rgb;
+
+    [SerializeField] private PlayerInput playerInput;
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
         GetComponent<Rigidbody>().centerOfMass = centerOfMass;
+        if(playerInput == null)
+        {
+            playerInput = FindAnyObjectByType<PlayerInput>();
+        }
     }
     // Visual updates
     void Update()
@@ -51,17 +58,17 @@ public class CartTest : MonoBehaviour
     void FixedUpdate()
     {
         // CONTROLS - FORWARD & RearWARD
-        if (Input.GetKey(KeyCode.Space))
+        float brake = playerInput.actions["Brake"].ReadValue<float>();
+        if (brake != 0 && rgb.velocity.x > 1)
         {
             // BRAKE
-            torquePower = 0f;
-            wheelRL.brakeTorque = brakeTorque;
-            wheelRR.brakeTorque = brakeTorque;
+            wheelRL.brakeTorque = brakeTorque * brake;
+            wheelRR.brakeTorque = brakeTorque * brake;
         }
         else
         {
             // SPEED
-            torquePower = maxTorque * Mathf.Clamp(Input.GetAxis("Vertical"), -1, 1);
+            torquePower = maxTorque * Mathf.Clamp(playerInput.actions["GasBrake"].ReadValue<float>(), -1, 1);
             wheelRL.brakeTorque = 0f;
             wheelRR.brakeTorque = 0f;
         }
@@ -70,7 +77,7 @@ public class CartTest : MonoBehaviour
         wheelRL.motorTorque = torquePower;
         // CONTROLS - LEFT & RIGHT
         // apply steering to front wheels
-        steerAngle = maxWheelTurnAngle * Input.GetAxis("Horizontal");
+        steerAngle = maxWheelTurnAngle * playerInput.actions["SteeringWheel"].ReadValue<float>();
         wheelFL.steerAngle = steerAngle;
         wheelFR.steerAngle = steerAngle;
     }
