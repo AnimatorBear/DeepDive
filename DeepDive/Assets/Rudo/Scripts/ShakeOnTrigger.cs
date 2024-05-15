@@ -23,7 +23,7 @@ public class ShakeOnTrigger : MonoBehaviour
     {
         if(other.gameObject.name == "Car")
         {
-            RumbleManager.instance.RumblePulse(0.25f, 1f, 99999999999999999f);
+            RumbleManager.instance.RumblePulse(0f,0.5f, 99999999999999999f);
         }
     }
     private void OnTriggerExit(Collider other)
