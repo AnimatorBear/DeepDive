@@ -21,7 +21,7 @@ public class HalfPointTrigger : MonoBehaviour
 
     public void Update()
     {
-        if (LapComplete.lapsDone == 5)
+        if (LapComplete.lapsDone == 6)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

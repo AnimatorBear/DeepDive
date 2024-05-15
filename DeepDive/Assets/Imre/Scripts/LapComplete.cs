@@ -21,7 +21,7 @@ public class LapComplete : MonoBehaviour
 	public GameObject HUD;
 	public GameObject Finish;
 
-	public static int lapsDone;
+	public static int lapsDone = 1;
 
     public void OnTriggerEnter()
 	{
