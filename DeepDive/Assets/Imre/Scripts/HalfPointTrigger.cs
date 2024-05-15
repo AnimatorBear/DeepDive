@@ -11,6 +11,9 @@ public class HalfPointTrigger : MonoBehaviour
     public GameObject HUD;
     public GameObject Finish;
 
+    public GameObject Player;
+
+
     public void OnTriggerEnter()
     {
         LapComplete.lapsDone++;
@@ -28,6 +31,7 @@ public class HalfPointTrigger : MonoBehaviour
             miniMap.SetActive(false);
             HUD.SetActive(false);
             Finish.SetActive(true);
+            Player.GetComponent<DriveController>().enabled = false;
         }
     }
 }
