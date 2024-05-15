@@ -85,6 +85,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Brake",
+                    "type": "Button",
+                    "id": "ec5337ef-b59d-4ed6-9d43-2ac430e75bf1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -177,9 +186,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "994a2647-5428-46f0-9250-3d9e2ec0c2d7",
-                    "path": "<Gamepad>/leftStick/down",
+                    "name": "positive",
+                    "id": "e796f1da-069e-490e-bc2d-94a5adfc19e7",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -188,9 +197,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "e796f1da-069e-490e-bc2d-94a5adfc19e7",
-                    "path": "<Gamepad>/leftStick/up",
+                    "name": "negative",
+                    "id": "3838094e-32b9-4ea9-97d3-37e7a48ee696",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -210,9 +219,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "04a15f05-da5a-44e7-8b4b-c66b3894d635",
-                    "path": "<Keyboard>/s",
+                    "name": "positive",
+                    "id": "a190a26f-e475-457a-81e6-f8101948afec",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -221,9 +230,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "a190a26f-e475-457a-81e6-f8101948afec",
-                    "path": "<Keyboard>/w",
+                    "name": "negative",
+                    "id": "497e20c5-b919-48da-b2b5-9c841e072019",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -243,9 +252,9 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "negative",
-                    "id": "1b66e3d5-eae9-48d3-b7e0-ddfc16f30fd4",
-                    "path": "<Gamepad>/leftTrigger",
+                    "name": "positive",
+                    "id": "b7c29929-314c-47a1-8739-514dbeb309ad",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -254,9 +263,9 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "positive",
-                    "id": "b7c29929-314c-47a1-8739-514dbeb309ad",
-                    "path": "<Gamepad>/rightTrigger",
+                    "name": "negative",
+                    "id": "89db3843-26bd-478a-8137-539427d6d5e3",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -428,6 +437,83 @@
                     "action": "ReverseManual",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Wheel",
+                    "id": "2f23becf-ae37-44bb-a165-a43ec82f1550",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "3e912aae-0459-4bf2-ab91-6dcb278d3ee3",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "17c02a81-1eab-4f96-9ab3-af37a100dd66",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "c6aab215-544b-46e5-ac20-693ba0f2b189",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "15e001ee-189a-4e11-baf9-aceb3dc6a1c2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Controller",
+                    "id": "101ba298-e25f-4dbf-abb8-4dab1c204afa",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "bf058c0c-7bd4-4473-838f-c3f36194f5d0",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Brake",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
