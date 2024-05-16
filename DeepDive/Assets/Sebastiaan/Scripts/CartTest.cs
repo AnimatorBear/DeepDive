@@ -81,6 +81,10 @@ public class CartTest : MonoBehaviour
         var temper = rgb.velocity.magnitude;
         wheelHealth -= (temper*Time.deltaTime) / wheelHealthDivider;
         print(wheelHealth);
+        if(wheelHealth < 0)
+        {
+            SwapWheels(wheelTypes.Broken);
+        }
         var temperi = rgb.velocity.x;
         // CONTROLS - FORWARD & RearWARD
         float brake = playerInput.actions["Brake"].ReadValue<float>();
@@ -139,12 +143,12 @@ public class CartTest : MonoBehaviour
     public void shifting()
     {
 
-        if (playerInput.actions["Manual"].triggered&& rgb.velocity.magnitude >= maxspeed - 8)
+        if (playerInput.actions["Manual"].triggered&& rgb.velocity.magnitude >= (maxspeed + wheelSpeed) - 5)
         {
             currentShift++;
             if (currentShift >= shifts.Length)
             {
-                currentShift = 0;
+                currentShift = shifts.Length - 1;
             }
             maxspeed = shifts[currentShift];
         }
@@ -153,7 +157,7 @@ public class CartTest : MonoBehaviour
             currentShift--;
             if (currentShift < 0)
             {
-                currentShift = shifts.Length - 1;
+                currentShift = 0;
             }
             maxspeed = shifts[currentShift];
         }
@@ -163,6 +167,8 @@ public class CartTest : MonoBehaviour
     public void SwapWheels(wheelTypes wheel)
     {
         currentWheel = wheel;
+        maxTorque = 500;
+        maxWheelTurnAngle = 40;
         switch (currentWheel)
         {
             case wheelTypes.Soft:
@@ -179,8 +185,11 @@ public class CartTest : MonoBehaviour
                 break;
             case wheelTypes.Broken:
                 wheelSpeed = -10;
+                maxTorque = 100;
+                maxWheelTurnAngle = 20;
                 break;
         }
+        if(maxspeed < -wheelSpeed) { maxspeed = -wheelSpeed; }
     }
 
 }
