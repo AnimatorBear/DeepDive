@@ -94,6 +94,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchCam",
+                    "type": "Button",
+                    "id": "96f83849-d35f-4e78-82da-41c6147e52a0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -429,8 +438,30 @@
                 },
                 {
                     "name": "",
+                    "id": "c458a0b3-7a12-4a97-a0ab-9c3c53d70fec",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Manual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "54798d1f-e6e7-4dd5-945c-b7e3c3132e89",
                     "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReverseManual",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "76307161-38f4-448f-aeb3-f4412bdd019a",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -514,6 +545,28 @@
                     "action": "Brake",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "f7bd6b44-c7b6-437b-98c5-5404d4e64c65",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7c86246e-846d-4085-9f4d-bcc197f94e19",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
