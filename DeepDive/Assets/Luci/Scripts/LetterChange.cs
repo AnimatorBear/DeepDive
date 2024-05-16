@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Xml;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class LetterChange : MonoBehaviour
 {
@@ -16,9 +18,12 @@ public class LetterChange : MonoBehaviour
     BlinkingLetter blscript;
     public GameObject confirmui;
     public TMP_Text confirmuitext;
+    public bool isConfirming = false;
+    PlayerInput playerInput;
 
     void Start()
     {
+        playerInput = FindAnyObjectByType<PlayerInput>();
         confirmui.SetActive(false);   
         for (int i = 0; i < currentLetters.Length; i++)
         {
@@ -38,35 +43,40 @@ public class LetterChange : MonoBehaviour
         }
         if (nameConfirmed)
         {
+            print("Yo!");
+            PlayerPrefs.SetString("CurrentPlayerName", string.Concat(currentLetters));
+            print(PlayerPrefs.GetString("CurrentPlayerName"));
+            SceneManager.LoadScene("Merge");
+            nameConfirmed = false;
             return;
         }
-
-        if (Input.GetKeyDown(KeyCode.W) && !scrolling)
+        float movin = playerInput.actions["GasBrake"].ReadValue<float>();
+        if (movin > 0 && !scrolling)
         {
             blscript.PlayerActive(true);
             AlreadyBlinked = false;
             ScrollLetters(1);
         }
-        else if (Input.GetKeyDown(KeyCode.S) && !scrolling)
+        else if (movin < 0 && !scrolling)
         {
             blscript.PlayerActive(true);
             AlreadyBlinked = false;
             ScrollLetters(-1);
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && !nameConfirmed)
+        else if (playerInput.actions["EnterName"].triggered && !nameConfirmed)
         {
+            if (isConfirming)
+            {
+                nameConfirmed = true;
+                isConfirming = false;
+                return;
+            }
             if (!scrolling)
             {
                 if (currentTextIndex == textMeshes.Length - 1 && !nameConfirmed)
                 {
                     ConfirmName();
                     StopBlinking();
-                }
-                else if (nameConfirmed)
-                {
-                    //Lock name and move to next scene
-                    // hier moet ff de naam als een playpref key zetten ofz
-                    // als je de hele naam wil doe je string.Concat(currentLetters)
                 }
                 else
                 {
@@ -80,19 +90,17 @@ public class LetterChange : MonoBehaviour
                 Debug.Log("Name confirmed: " + GetCurrentName());
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Backspace) && !nameConfirmed)
+        else if (playerInput.actions["BackName"].triggered && !nameConfirmed)
         {
-            Debug.Log("Moved to previous");
-            blscript.currentText.enabled = true;
-            MoveToPreviousLetter();
-        }
-        else if (Input.GetKeyDown(KeyCode.Backspace) && nameConfirmed)
-        {
-            //dit werkt niet idk why
-            Debug.Log("Name canceled!");
-            nameConfirmed = false;
-            confirmui.SetActive(false);
-            currentTextIndex = 0;
+            if (isConfirming)
+            {
+                Debug.Log("Name canceled!");
+                nameConfirmed = false;
+                isConfirming = false;
+                confirmui.SetActive(false);
+                currentTextIndex = 0;
+                return;
+            }
         }
         
     }
@@ -179,7 +187,7 @@ public class LetterChange : MonoBehaviour
 
     void ConfirmName()
     {
-        nameConfirmed = true;
+        isConfirming = true;
         confirmuitext.text = "Your name is " + string.Concat(currentLetters) + " Are you sure you want this as your name?";
         confirmui.SetActive(true);
         Debug.Log("Name: " + GetCurrentName() + ". Press Enter again to confirm.");    

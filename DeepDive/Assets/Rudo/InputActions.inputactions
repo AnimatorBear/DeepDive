@@ -112,6 +112,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "EnterName",
+                    "type": "Button",
+                    "id": "d98793d2-cb8d-475a-a2db-aff3a1362d13",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BackName",
+                    "type": "Button",
+                    "id": "00a7d32e-d68b-44d1-8390-9a81a62a36c1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -596,6 +614,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PauseGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a974bf7d-55d7-4c4e-b6c1-25675677ee38",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnterName",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15933c00-5de9-4cd2-8bc6-4a0d1cfbe139",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackName",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
