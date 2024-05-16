@@ -46,6 +46,8 @@ public class CartTest : MonoBehaviour
     public bool forceBrake = false;
 
     [SerializeField] private float wheelHealthDivider = 50;
+
+    public float wheelDamageMultiplier = 1;
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
@@ -79,8 +81,8 @@ public class CartTest : MonoBehaviour
     void FixedUpdate()
     {
         var temper = rgb.velocity.magnitude;
-        wheelHealth -= (temper*Time.deltaTime) / wheelHealthDivider;
-        print(wheelHealth);
+        wheelHealth -= ((temper*Time.deltaTime) / wheelHealthDivider) * wheelDamageMultiplier;
+        //print(wheelHealth);
         if(wheelHealth < 0)
         {
             SwapWheels(wheelTypes.Broken);
