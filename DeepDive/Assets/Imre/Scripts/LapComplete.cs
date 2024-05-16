@@ -23,39 +23,38 @@ public class LapComplete : MonoBehaviour
 
 	public static int lapsDone = 1;
 
-    public void OnTriggerEnter()
+	public void OnTriggerEnter(Collider other)
 	{
-		
-		
-		if (LapTimeManager.secondCount <= 9)
-		{
-			secondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.secondCount + ".";
-		}
-		else
-		{
-			secondDisplay.GetComponent<Text>().text = "" + LapTimeManager.secondCount + ".";
-		}
+		if (other.CompareTag("Player"))
+        {
+			if (LapTimeManager.secondCount <= 9)
+			{
+				secondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.secondCount + ".";
+			}
+			else
+			{
+				secondDisplay.GetComponent<Text>().text = "" + LapTimeManager.secondCount + ".";
+			}
 
-		if (LapTimeManager.minuteCount <= 9)
-		{
-			minuteDisplay.GetComponent<Text>().text = "0" + LapTimeManager.minuteCount + ".";
-		}
-		else
-		{
-			minuteDisplay.GetComponent<Text>().text = "" + LapTimeManager.minuteCount + ".";
-		}
+			if (LapTimeManager.minuteCount <= 9)
+			{
+				minuteDisplay.GetComponent<Text>().text = "0" + LapTimeManager.minuteCount + ".";
+			}
+			else
+			{
+				minuteDisplay.GetComponent<Text>().text = "" + LapTimeManager.minuteCount + ".";
+			}
 
-		milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
+			milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
 
-		LapTimeManager.minuteCount = 0;
-		LapTimeManager.secondCount = 0;
-		LapTimeManager.milliCount = 0;
+			LapTimeManager.minuteCount = 0;
+			LapTimeManager.secondCount = 0;
+			LapTimeManager.milliCount = 0;
 
-		lapCounter.GetComponent<Text>().text = "" + lapsDone;
+			lapCounter.GetComponent<Text>().text = "" + lapsDone;
 
-		halfLapTrig.SetActive(true);
-		lapCompleteTrig.SetActive(false);
+			halfLapTrig.SetActive(true);
+			lapCompleteTrig.SetActive(false);
+		}		
 	}
-
-
 }
