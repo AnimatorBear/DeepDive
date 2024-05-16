@@ -26,7 +26,6 @@ public class CheckFloor : MonoBehaviour
             if (Physics.Raycast(wheels[i].transform.position, wheels[i].transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
             {
                 Debug.DrawRay(wheels[i].transform.position, wheels[i].transform.TransformDirection(Vector3.down) * hit.distance, Color.yellow);
-                Debug.Log("Did Hit " + hit.collider.gameObject.tag);
                 switch(hit.collider.gameObject.tag)
                 {
                     case "Curb":

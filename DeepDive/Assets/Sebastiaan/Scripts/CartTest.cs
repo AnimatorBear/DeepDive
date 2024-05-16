@@ -89,8 +89,12 @@ public class CartTest : MonoBehaviour
         if(wheelHealth < 0)
         {
             SwapWheels(wheelTypes.Broken);
+            healthText.text = "0";
         }
-        healthText.text = ((int)wheelHealth).ToString();
+        else
+        {
+            healthText.text = ((int)wheelHealth).ToString();
+        }
         var temperi = rgb.velocity.x;
         // CONTROLS - FORWARD & RearWARD
         float brake = playerInput.actions["Brake"].ReadValue<float>();

@@ -86,6 +86,7 @@ public class AICartTest : MonoBehaviour
 
         // Get the current waypoint
         Transform targetWaypoint = waypoints[currentWaypointIndex];
+        print(targetWaypoint.name);
 
         // Calculate the direction to the target waypoint
         Vector3 directionToWaypoint = (targetWaypoint.position - transform.position).normalized;
@@ -115,6 +116,10 @@ public class AICartTest : MonoBehaviour
             wheelRL.brakeTorque = brakeTorque;
             wheelRR.brakeTorque = brakeTorque;
             torquePower = 0f; // Optionally, reduce motor torque
+            if(rgb.velocity.magnitude < 4)
+            {
+                isInBrakeZone = false;
+            }
         }
         else
         {
