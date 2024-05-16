@@ -24085,7 +24085,18 @@ MonoBehaviour:
   eulertest: {x: 0, y: 0, z: 0}
   torquePower: 0
   steerAngle: 30
+  maxspeed: 0
+  shifts: 00000000070000000d00000012000000180000001e0000002c0000003c000000
+  currentShift: 1
   rgb: {fileID: 1826534966}
+  playerInput: {fileID: 0}
+  wheelHealth: 100
+  currentWheel: 0
+  wheelSpeed: 0
+  canMove: 1
+  forceBrake: 0
+  wheelHealthDivider: 50
+  wheelDamageMultiplier: 1
 --- !u!65 &1826534968
 BoxCollider:
   m_ObjectHideFlags: 0
