@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class HalfPointTrigger : MonoBehaviour
@@ -13,6 +14,7 @@ public class HalfPointTrigger : MonoBehaviour
     public GameObject Finish;
 
     public GameObject Player;
+    public GameObject timeButton;
 
 
     public void OnTriggerEnter(Collider other)
@@ -35,6 +37,7 @@ public class HalfPointTrigger : MonoBehaviour
             HUD.SetActive(false);
             Finish.SetActive(true);
             Player.GetComponent<CartTest>().enabled = false;
+            FindAnyObjectByType<EventSystem>().SetSelectedGameObject(timeButton);
         }
     }
     public void Start()

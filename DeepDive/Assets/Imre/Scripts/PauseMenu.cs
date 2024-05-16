@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject Finish;
     public bool isPaused = false;
     public AudioMixer audioMixer;
+    public GameObject backButton;
 
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
@@ -100,7 +102,8 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        pauseMenu.SetActive(true); 
+        pauseMenu.SetActive(true);
+        FindAnyObjectByType<EventSystem>().SetSelectedGameObject(backButton);
         isPaused = true;
     }
 
