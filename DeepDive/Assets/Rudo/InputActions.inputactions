@@ -630,8 +630,30 @@
                 },
                 {
                     "name": "",
+                    "id": "f5835b79-ccc6-48cd-9d70-13ee4c5e3cca",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EnterName",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "15933c00-5de9-4cd2-8bc6-4a0d1cfbe139",
                     "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BackName",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e826c32c-b1a5-4985-b083-01bd67dccd64",
+                    "path": "<Keyboard>/backspace",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
