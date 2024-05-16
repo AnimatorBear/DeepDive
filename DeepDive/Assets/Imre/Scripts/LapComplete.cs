@@ -27,6 +27,7 @@ public class LapComplete : MonoBehaviour
 	{
 		if (other.CompareTag("Player"))
         {
+			lapsDone++;
 			if (LapTimeManager.secondCount <= 9)
 			{
 				secondDisplay.GetComponent<Text>().text = "0" + LapTimeManager.secondCount + ".";

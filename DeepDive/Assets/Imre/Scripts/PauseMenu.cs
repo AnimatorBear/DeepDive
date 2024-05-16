@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject miniMap;
     public GameObject HUD;
+    public GameObject Finish;
     public bool isPaused = false;
     public AudioMixer audioMixer;
 
@@ -18,6 +20,8 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        HUD.SetActive(true);
+        Finish.SetActive(false);
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -64,6 +68,11 @@ public class PauseMenu : MonoBehaviour
         {
             HUD.SetActive(true);
         }
+
+        if (LapComplete.lapsDone == 3)
+        {
+            Finish.SetActive(true);
+        }
     }
 
     public void Resume()
@@ -72,6 +81,18 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         pauseMenu.SetActive(false);
         isPaused = false;
+    }
+
+    public void ReturnToMenu()
+    {
+        Finish.SetActive(false);
+        HUD.SetActive(true);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
     void Pause()
