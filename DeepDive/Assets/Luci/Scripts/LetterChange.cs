@@ -8,15 +8,18 @@ public class LetterChange : MonoBehaviour
 {
     public TextMeshProUGUI[] textMeshes; 
     private int currentTextIndex = 0; 
-    private char[] currentLetters = new char[3]; 
+    private char[] currentLetters = new char[3];
     private float scrollSpeed = 0.5f; 
     public bool scrolling = false; 
     public bool nameConfirmed = false;
+    private bool AlreadyBlinked = false;
     BlinkingLetter blscript;
+    public GameObject confirmui;
+    public TMP_Text confirmuitext;
 
     void Start()
     {
-        
+        confirmui.SetActive(false);   
         for (int i = 0; i < currentLetters.Length; i++)
         {
             currentLetters[i] = 'A';
@@ -28,6 +31,11 @@ public class LetterChange : MonoBehaviour
 
     void Update()
     {
+        if (!AlreadyBlinked)
+        {
+            AlreadyBlinked = true;
+            blscript.PlayerActive(false);
+        }
         if (nameConfirmed)
         {
             return;
@@ -35,10 +43,14 @@ public class LetterChange : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.W) && !scrolling)
         {
+            blscript.PlayerActive(true);
+            AlreadyBlinked = false;
             ScrollLetters(1);
         }
         else if (Input.GetKeyDown(KeyCode.S) && !scrolling)
         {
+            blscript.PlayerActive(true);
+            AlreadyBlinked = false;
             ScrollLetters(-1);
         }
         else if (Input.GetKeyDown(KeyCode.Return) && !nameConfirmed)
@@ -48,6 +60,13 @@ public class LetterChange : MonoBehaviour
                 if (currentTextIndex == textMeshes.Length - 1 && !nameConfirmed)
                 {
                     ConfirmName();
+                    StopBlinking();
+                }
+                else if (nameConfirmed)
+                {
+                    //Lock name and move to next scene
+                    // hier moet ff de naam als een playpref key zetten ofz
+                    // als je de hele naam wil doe je string.Concat(currentLetters)
                 }
                 else
                 {
@@ -67,14 +86,12 @@ public class LetterChange : MonoBehaviour
             blscript.currentText.enabled = true;
             MoveToPreviousLetter();
         }
-        if (Input.GetKeyDown(KeyCode.Return) && nameConfirmed)
-        {
-            nameConfirmed = true;
-        }
         else if (Input.GetKeyDown(KeyCode.Backspace) && nameConfirmed)
         {
+            //dit werkt niet idk why
             Debug.Log("Name canceled!");
             nameConfirmed = false;
+            confirmui.SetActive(false);
             currentTextIndex = 0;
         }
         
@@ -107,6 +124,7 @@ public class LetterChange : MonoBehaviour
     IEnumerator ScrollToLetter(char targetLetter)
     {
         scrolling = true;
+        
 
         while (currentLetters[currentTextIndex] != targetLetter)
         {
@@ -162,11 +180,21 @@ public class LetterChange : MonoBehaviour
     void ConfirmName()
     {
         nameConfirmed = true;
+        confirmuitext.text = "Your name is " + string.Concat(currentLetters) + " Are you sure you want this as your name?";
+        confirmui.SetActive(true);
         Debug.Log("Name: " + GetCurrentName() + ". Press Enter again to confirm.");    
     }
 
     string GetCurrentName()
     {
         return string.Concat(currentLetters);
+    }
+    void StopBlinking()
+    {
+        if (blscript != null && blscript.currentText != null)
+        {
+            blscript.currentText.enabled = true;
+            blscript.StopBlinking();
+        }
     }
 }
