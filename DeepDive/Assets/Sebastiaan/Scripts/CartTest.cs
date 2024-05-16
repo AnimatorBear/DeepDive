@@ -27,9 +27,25 @@ public class CartTest : MonoBehaviour
     public float torquePower = 0f;
     public float steerAngle = 30f;
 
+
+
+    public float maxspeed;
+    public int[] shifts = { 0, 7, 13, 18, 24, 30, 44, 60 };
+    public int currentShift = 1;
+
+
     public Rigidbody rgb;
 
     [SerializeField] private PlayerInput playerInput;
+
+    [SerializeField] private float wheelHealth = 100f;
+    public enum wheelTypes {Soft,Medium,Hard,Broken}
+    public wheelTypes currentWheel;
+    public float wheelSpeed = 0;
+    public bool canMove = true;
+    public bool forceBrake = false;
+
+    [SerializeField] private float wheelHealthDivider = 50;
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
@@ -38,28 +54,43 @@ public class CartTest : MonoBehaviour
         {
             playerInput = FindAnyObjectByType<PlayerInput>();
         }
+        SwapWheels(wheelTypes.Medium);
     }
     // Visual updates
     void Update()
     {
-        Vector3 temp = frontLeftWheelMesh.localEulerAngles;
-        Vector3 temp1 = frontRightWheelMesh.localEulerAngles;
-        temp.y = wheelFL.steerAngle - (frontLeftWheelMesh.localEulerAngles.z);
-        frontLeftWheelMesh.localEulerAngles = temp;
-        temp1.y = wheelFR.steerAngle - (frontRightWheelMesh.localEulerAngles.z);
-        frontRightWheelMesh.localEulerAngles = temp1;
-        // Wheel rotation
-        frontLeftWheelMesh.Rotate(wheelFL.rpm / 60 * 360 * Time.deltaTime, 0, 0);
-        frontRightWheelMesh.Rotate(wheelFR.rpm / 60 * 360 * Time.deltaTime, 0, 0);
-        rearLeftWheelMesh.Rotate(wheelRL.rpm / 60 * 360 * Time.deltaTime, 0, 0);
-        rearRightWheelMesh.Rotate(wheelRR.rpm / 60 * 360 * Time.deltaTime, 0, 0);
+        if (canMove)
+        {
+            shifting();
+            Vector3 temp = frontLeftWheelMesh.localEulerAngles;
+            Vector3 temp1 = frontRightWheelMesh.localEulerAngles;
+            temp.y = wheelFL.steerAngle - (frontLeftWheelMesh.localEulerAngles.z);
+            frontLeftWheelMesh.localEulerAngles = temp;
+            temp1.y = wheelFR.steerAngle - (frontRightWheelMesh.localEulerAngles.z);
+            frontRightWheelMesh.localEulerAngles = temp1;
+            // Wheel rotation
+            frontLeftWheelMesh.Rotate(wheelFL.rpm / 60 * 360 * Time.deltaTime, 0, 0);
+            frontRightWheelMesh.Rotate(wheelFR.rpm / 60 * 360 * Time.deltaTime, 0, 0);
+            rearLeftWheelMesh.Rotate(wheelRL.rpm / 60 * 360 * Time.deltaTime, 0, 0);
+            rearRightWheelMesh.Rotate(wheelRR.rpm / 60 * 360 * Time.deltaTime, 0, 0);
+        }
     }
     // Physics updates
     void FixedUpdate()
     {
+        var temper = rgb.velocity.magnitude;
+        wheelHealth -= (temper*Time.deltaTime) / wheelHealthDivider;
+        print(wheelHealth);
+        var temperi = rgb.velocity.x;
         // CONTROLS - FORWARD & RearWARD
         float brake = playerInput.actions["Brake"].ReadValue<float>();
-        if (brake != 0 && rgb.velocity.x > 1)
+        //Makes the player brake 3x as much when being forced to brake (In a pitstop)
+        if (forceBrake)
+        {
+            brake = 3;
+        }
+
+        if (brake != 0 && rgb.velocity.x > 1 || forceBrake)
         {
             // BRAKE
             wheelRL.brakeTorque = brakeTorque * brake;
@@ -72,14 +103,84 @@ public class CartTest : MonoBehaviour
             wheelRL.brakeTorque = 0f;
             wheelRR.brakeTorque = 0f;
         }
-        // Apply torque
-        wheelRR.motorTorque = torquePower;
-        wheelRL.motorTorque = torquePower;
-        // CONTROLS - LEFT & RIGHT
-        // apply steering to front wheels
-        steerAngle = maxWheelTurnAngle * playerInput.actions["SteeringWheel"].ReadValue<float>();
-        wheelFL.steerAngle = steerAngle;
-        wheelFR.steerAngle = steerAngle;
+        if (canMove)
+        {
+            // Apply torque
+            wheelRR.motorTorque = torquePower;
+            wheelRL.motorTorque = torquePower;
+            // CONTROLS - LEFT & RIGHT
+            // apply steering to front wheels
+            steerAngle = maxWheelTurnAngle * playerInput.actions["SteeringWheel"].ReadValue<float>();
+            wheelFL.steerAngle = steerAngle;
+            wheelFR.steerAngle = steerAngle;
+
+
+            float currentSpeed = rgb.velocity.magnitude;
+
+            // Check if the current speed exceeds the max speed
+            if (currentSpeed > (maxspeed + wheelSpeed))
+            {
+                // Calculate the velocity direction
+                Vector3 velocityDirection = rgb.velocity.normalized;
+
+                // Set the velocity to the max speed in the same direction
+                rgb.velocity = velocityDirection * (maxspeed + wheelSpeed);
+            }
+
+
+
+
+            print(maxspeed + wheelSpeed);
+            //Debug.LogWarning("x"+rgb.velocity.magnitude);
+
+        }
+    }
+
+    public void shifting()
+    {
+
+        if (playerInput.actions["Manual"].triggered&& rgb.velocity.magnitude >= maxspeed - 8)
+        {
+            currentShift++;
+            if (currentShift >= shifts.Length)
+            {
+                currentShift = 0;
+            }
+            maxspeed = shifts[currentShift];
+        }
+        if (playerInput.actions["ReverseManual"].triggered)
+        {
+            currentShift--;
+            if (currentShift < 0)
+            {
+                currentShift = shifts.Length - 1;
+            }
+            maxspeed = shifts[currentShift];
+        }
+
+    }
+
+    public void SwapWheels(wheelTypes wheel)
+    {
+        currentWheel = wheel;
+        switch (currentWheel)
+        {
+            case wheelTypes.Soft:
+                wheelHealth = 80;
+                wheelSpeed = 5;
+                break;
+            case wheelTypes.Medium:
+                wheelHealth = 100;
+                wheelSpeed = 3;
+                break;
+            case wheelTypes.Hard:
+                wheelHealth = 120;
+                wheelSpeed = 1;
+                break;
+            case wheelTypes.Broken:
+                wheelSpeed = -10;
+                break;
+        }
     }
 
 }
