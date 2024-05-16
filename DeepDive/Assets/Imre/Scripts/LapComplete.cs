@@ -48,8 +48,9 @@ public class LapComplete : MonoBehaviour
 			}
 
 			milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
-			string best = PlayerPrefs.GetString("CurrentTime");
-			if (best != null)
+			string best = SaveTime.instance.GetTime();
+
+            if (best != null)
 			{
 
                 float min = float.Parse(best.Split(':')[0]);
@@ -63,28 +64,24 @@ public class LapComplete : MonoBehaviour
                     {
                         if (mil >= LapTimeManager.milliCount)
                         {
-                            PlayerPrefs.SetString("CurrentTime", LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
-                            print(PlayerPrefs.GetString("CurrentTime") + " New Best!");
-						}
+                            SaveTime.instance.SetTime(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
+                        }
 						else
 						{
-                            print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in milliseconds");
                         }
 					}
 					else
 					{
-                        print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in seconds");
                     }
 				}
 				else
 				{
-                    print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in minutes");
                 }
 			}
 			else
 			{
-                //PlayerPrefs.SetString("CurrentTime", LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
-                print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in life");
+				//PlayerPrefs.SetString("CurrentTime", LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
+				SaveTime.instance.SetTime(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
             }
 
             LapTimeManager.minuteCount = 0;

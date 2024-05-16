@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -17,9 +18,11 @@ public class PauseMenu : MonoBehaviour
 
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
+    PlayerInput playerInput;
 
     void Start()
     {
+        playerInput = FindAnyObjectByType<PlayerInput>();
         HUD.SetActive(true);
         Finish.SetActive(false);
         resolutions = Screen.resolutions;
@@ -46,7 +49,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (playerInput.actions["PauseGame"].triggered)
         {
             settingsMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
