@@ -45,10 +45,15 @@ public class LetterChange : MonoBehaviour
         if (nameConfirmed)
         {
             StopBlinking();
-            PlayerPrefs.SetString("CurrentPlayerName", string.Concat(currentLetters));
-            Debug.Log("Player Name: " + PlayerPrefs.GetString("CurrentPlayerName"));
-            SceneManager.LoadScene("Merge");
+            print(SaveTime.instance.GetBool());
+            if (SaveTime.instance.GetBool())
+            {
+                SaveTime.instance.SetName(GetCurrentName());
+                Debug.Log("Player Name: " + SaveTime.instance.GetName());
+                SaveTime.instance.SetBool(0);
+            }
             nameConfirmed = false;
+            SceneManager.LoadScene("MainMenu");
             return;
         }
 

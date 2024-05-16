@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Imre/MainMenu.unity
     guid: db62a1302901d9f4f82bfe0e34e54b38
   - enabled: 1
-    path: Assets/Imre/Imre.unity
-    guid: 0a2cfba9038988d4f8d351e3d3f38dbf
-  - enabled: 1
     path: Assets/Scenes/Merge.unity
     guid: 0aedb0c71235b8141bd445e37a3ceaa8
+  - enabled: 1
+    path: Assets/Luci/Scenes/Luci.unity
+    guid: 6740a065f685d4b42a03111c73921229
   m_configObjects: {}

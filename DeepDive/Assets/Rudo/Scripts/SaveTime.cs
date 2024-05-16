@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SaveTime : MonoBehaviour
@@ -80,5 +81,27 @@ public class SaveTime : MonoBehaviour
     public void SetName(string name)
     {
         PlayerPrefs.SetString("BestName", name);
+    }
+
+    public void ChangeSceneToLuci()
+    {
+        SceneManager.LoadScene("Luci");
+    }
+
+    public void SetBool(int  value)
+    {
+        PlayerPrefs.SetInt("IsBest", value);
+    }
+    public bool GetBool()
+    {
+        int i = PlayerPrefs.GetInt("IsBest");
+        if (i == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
