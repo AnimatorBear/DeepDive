@@ -10,7 +10,7 @@ public class LetterChange : MonoBehaviour
     private int currentTextIndex = 0; 
     private char[] currentLetters = new char[3]; 
     private float scrollSpeed = 0.5f; 
-    private bool scrolling = false; 
+    public bool scrolling = false; 
     public bool nameConfirmed = false;
     BlinkingLetter blscript;
 

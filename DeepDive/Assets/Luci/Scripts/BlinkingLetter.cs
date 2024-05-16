@@ -23,11 +23,10 @@ public class BlinkingLetter : MonoBehaviour
 
     IEnumerator Blink()
     {
-        while (!letterchangescript.nameConfirmed)
+        while (!letterchangescript.nameConfirmed && !letterchangescript.scrolling)
         {
             currentText.enabled = false;
             yield return new WaitForSeconds(blinkspeed);
-            Debug.Log("ayo where the food at");
             currentText.enabled = true;
             yield return new WaitForSeconds(blinkspeed);
             StartCoroutine(Blink());
