@@ -3828,7 +3828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &476067897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3842,12 +3842,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lapCompleteTrig: {fileID: 476067896}
-  halfLapTrig: {fileID: 0}
-  minuteDisplay: {fileID: 0}
-  secondDisplay: {fileID: 0}
-  milliDisplay: {fileID: 0}
+  halfLapTrig: {fileID: 1640650291}
+  minuteDisplay: {fileID: 618515282}
+  secondDisplay: {fileID: 396089901}
+  milliDisplay: {fileID: 810376839}
   lapTimeBox: {fileID: 0}
-  lapCounter: {fileID: 0}
+  lapCounter: {fileID: 3885342}
 --- !u!65 &476067898
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3928,8 +3928,8 @@ Transform:
   m_GameObject: {fileID: 476067896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.20600657, z: -0, w: 0.9785507}
-  m_LocalPosition: {x: 162.14, y: 1.779, z: -2.87}
-  m_LocalScale: {x: 5.135987, y: 1, z: 0.39753}
+  m_LocalPosition: {x: 160.16, y: 1.779, z: -1.99}
+  m_LocalScale: {x: 8.740422, y: 1, z: 0.39753}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -10179,8 +10179,8 @@ Transform:
   m_GameObject: {fileID: 1640650291}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7379662, z: -0, w: -0.6748377}
-  m_LocalPosition: {x: -104.24, y: 1.585, z: 44.96}
-  m_LocalScale: {x: 6.720406, y: 1, z: 0.39753}
+  m_LocalPosition: {x: -104.88, y: 0.61, z: 52.13}
+  m_LocalScale: {x: 15.932066, y: 1, z: 0.39753}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
