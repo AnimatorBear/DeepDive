@@ -92,6 +92,8 @@ public class LetterChange : MonoBehaviour
         }
         else if (playerInput.actions["BackName"].triggered && !nameConfirmed)
         {
+            StopBlinking();
+            MoveToPreviousLetter();
             if (isConfirming)
             {
                 Debug.Log("Name canceled!");
