@@ -80,7 +80,7 @@ public class CartTest : MonoBehaviour
     {
         var temper = rgb.velocity.magnitude;
         wheelHealth -= (temper*Time.deltaTime) / wheelHealthDivider;
-        print(wheelHealth);
+        //print(wheelHealth);
         if(wheelHealth < 0)
         {
             SwapWheels(wheelTypes.Broken);
