@@ -7,30 +7,59 @@ public class BlinkingLetter : MonoBehaviour
 {
     public TextMeshProUGUI currentText;
     private float blinkspeed = 0.5f;
-    LetterChange letterchangescript;
+    private Coroutine blinkingCoroutine;
+    private bool playerActive = false;
+
     void Start()
     {
-        letterchangescript = GetComponent<LetterChange>();
-        StartCoroutine(Blink());
-        
+        StartBlinking();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (playerActive)
+        {
+            StopBlinking();
+        }
+        else if (blinkingCoroutine == null)
+        {
+            StartBlinking();
+        }
+    }
+
+    public void StopBlinking()
+    {
+        if (blinkingCoroutine != null)
+        {
+            StopCoroutine(blinkingCoroutine);
+            blinkingCoroutine = null;
+            currentText.enabled = true;
+        }
     }
 
     IEnumerator Blink()
     {
-        while (!letterchangescript.nameConfirmed && !letterchangescript.scrolling)
+        while (true)
         {
-            currentText.enabled = false;
+            currentText.enabled = !currentText.enabled;
             yield return new WaitForSeconds(blinkspeed);
-            currentText.enabled = true;
-            yield return new WaitForSeconds(blinkspeed);
-            StartCoroutine(Blink());
-            yield return null;
+        }
+    }
+
+    public void PlayerActive(bool isActive)
+    {
+        playerActive = isActive;
+        if (playerActive)
+        {
+            StopBlinking();
+        }
+    }
+
+    void StartBlinking()
+    {
+        if (blinkingCoroutine == null)
+        {
+            blinkingCoroutine = StartCoroutine(Blink());
         }
     }
 }
