@@ -130,8 +130,8 @@ public class CartTest : MonoBehaviour
 
 
 
-            print(maxspeed + wheelSpeed);
-            //Debug.LogWarning("x"+rgb.velocity.magnitude);
+            print("maxspeed + wheelspeed" + maxspeed + wheelSpeed);
+           print("velocity.x"+rgb.velocity.magnitude);
 
         }
     }
