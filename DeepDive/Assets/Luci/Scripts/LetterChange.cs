@@ -44,9 +44,6 @@ public class LetterChange : MonoBehaviour
         if (nameConfirmed)
         {
             print("Yo!");
-            PlayerPrefs.SetString("CurrentPlayerName", string.Concat(currentLetters));
-            print(PlayerPrefs.GetString("CurrentPlayerName"));
-            SceneManager.LoadScene("Merge");
             nameConfirmed = false;
             return;
         }

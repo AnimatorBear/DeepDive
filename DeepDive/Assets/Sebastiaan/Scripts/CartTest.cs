@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,6 +49,8 @@ public class CartTest : MonoBehaviour
     [SerializeField] private float wheelHealthDivider = 50;
 
     public float wheelDamageMultiplier = 1;
+
+    public TMP_Text healthText;
     void Start()
     {
         rgb = GetComponent<Rigidbody>();
@@ -87,6 +90,7 @@ public class CartTest : MonoBehaviour
         {
             SwapWheels(wheelTypes.Broken);
         }
+        healthText.text = ((int)wheelHealth).ToString();
         var temperi = rgb.velocity.x;
         // CONTROLS - FORWARD & RearWARD
         float brake = playerInput.actions["Brake"].ReadValue<float>();
@@ -137,7 +141,7 @@ public class CartTest : MonoBehaviour
 
 
             print("maxspeed + wheelspeed" + maxspeed + wheelSpeed);
-           print("velocity.x"+rgb.velocity.magnitude);
+            //print("velocity.x"+rgb.velocity.magnitude);
 
         }
     }

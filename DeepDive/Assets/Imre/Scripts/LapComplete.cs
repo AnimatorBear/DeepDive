@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LapComplete : MonoBehaviour
@@ -46,14 +47,52 @@ public class LapComplete : MonoBehaviour
 			}
 
 			milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
+			string best = PlayerPrefs.GetString("CurrentTime");
+			if (best != null)
+			{
 
-			LapTimeManager.minuteCount = 0;
+                float min = float.Parse(best.Split(':')[0]);
+                float sec = float.Parse(best.Split(':')[1]);
+                float mil = float.Parse(best.Split(':')[2]);
+				print(min + ":" + sec + ":" + mil + " !Best");
+				print(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount + " !New");
+                if (min >= LapTimeManager.minuteCount)
+                {
+                    if (sec >= LapTimeManager.secondCount)
+                    {
+                        if (mil >= LapTimeManager.milliCount)
+                        {
+                            PlayerPrefs.SetString("CurrentTime", LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
+                            print(PlayerPrefs.GetString("CurrentTime") + " New Best!");
+						}
+						else
+						{
+                            print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in milliseconds");
+                        }
+					}
+					else
+					{
+                        print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in seconds");
+                    }
+				}
+				else
+				{
+                    print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in minutes");
+                }
+			}
+			else
+			{
+                //PlayerPrefs.SetString("CurrentTime", LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
+                print(PlayerPrefs.GetString("CurrentTime") + " Fuck I failed in life");
+            }
+
+            LapTimeManager.minuteCount = 0;
 			LapTimeManager.secondCount = 0;
 			LapTimeManager.milliCount = 0;
 
 			lapCounter.GetComponent<Text>().text = "" + lapsDone;
 
-			halfLapTrig.SetActive(true);
+            halfLapTrig.SetActive(true);
 			lapCompleteTrig.SetActive(false);
 		}		
 	}

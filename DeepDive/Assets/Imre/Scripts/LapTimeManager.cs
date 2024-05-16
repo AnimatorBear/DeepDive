@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class LapTimeManager : MonoBehaviour
 {
+	public static LapTimeManager instance;
 
 	public static int minuteCount;
 	public static int secondCount;
@@ -13,8 +14,11 @@ public class LapTimeManager : MonoBehaviour
 	public GameObject secondBox;
 	public GameObject milliBox;
 
-
-	void Update()
+    private void Start()
+    {
+        instance = this;
+    }
+    void Update()
 	{
 		milliCount += Time.deltaTime * 10;
 		milliDisplay = milliCount.ToString("F0");
