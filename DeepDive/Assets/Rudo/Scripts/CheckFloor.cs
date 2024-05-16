@@ -6,6 +6,7 @@ public class CheckFloor : MonoBehaviour
 {
 
     public WheelCollider[] wheels;
+    public CartTest cart;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -46,9 +47,15 @@ public class CheckFloor : MonoBehaviour
         if(offRoads >= 3)
         {
             RumbleManager.instance.RumblePulse(0, rb.velocity.magnitude / 200, 0.1f);
+            cart.wheelDamageMultiplier = 2f;
         }else if(offRoads >= 1)
         {
             RumbleManager.instance.RumblePulse(0, rb.velocity.magnitude / 500, 0.1f);
+            cart.wheelDamageMultiplier = 1.5f;
+        }
+        else
+        {
+            cart.wheelDamageMultiplier = 1;
         }
     }
 }
