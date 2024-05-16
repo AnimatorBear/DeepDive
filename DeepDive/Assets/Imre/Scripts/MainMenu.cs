@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Imre");
+        SceneManager.LoadScene("Merge");
     }
 
     void Start()

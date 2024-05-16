@@ -19,7 +19,7 @@ public class HalfPointTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            LapComplete.lapsDone++;
+            
             lapCompleteTrigger.SetActive(true);
             halfPointTrigger.SetActive(false);
         }              
@@ -27,7 +27,7 @@ public class HalfPointTrigger : MonoBehaviour
 
     public void Update()
     {
-        if (LapComplete.lapsDone == 6)
+        if (LapComplete.lapsDone == 3)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -36,5 +36,10 @@ public class HalfPointTrigger : MonoBehaviour
             Finish.SetActive(true);
             Player.GetComponent<CartTest>().enabled = false;
         }
+    }
+    public void Start()
+    {
+        HUD.SetActive(true);
+        Finish.SetActive(false);
     }
 }

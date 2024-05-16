@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,16 +11,17 @@ public class PauseMenu : MonoBehaviour
     public GameObject settingsMenu;
     public GameObject miniMap;
     public GameObject HUD;
+    public GameObject Finish;
     public bool isPaused = false;
     public AudioMixer audioMixer;
 
     Resolution[] resolutions;
     public Dropdown resolutionDropdown;
-    PlayerInput playerInput;
 
     void Start()
     {
-        playerInput = FindAnyObjectByType<PlayerInput>();
+        HUD.SetActive(true);
+        Finish.SetActive(false);
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
@@ -45,7 +46,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (playerInput.actions["PauseGame"].triggered)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             settingsMenu.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
@@ -68,13 +69,10 @@ public class PauseMenu : MonoBehaviour
             HUD.SetActive(true);
         }
 
-        #if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.C))
+        if (LapComplete.lapsDone == 3)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Finish.SetActive(true);
         }
-        #endif
     }
 
     public void Resume()
@@ -83,6 +81,18 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         pauseMenu.SetActive(false);
         isPaused = false;
+    }
+
+    public void ReturnToMenu()
+    {
+        Finish.SetActive(false);
+        HUD.SetActive(true);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
     }
 
     void Pause()
