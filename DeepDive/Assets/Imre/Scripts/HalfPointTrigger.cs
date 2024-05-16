@@ -14,12 +14,14 @@ public class HalfPointTrigger : MonoBehaviour
     public GameObject Player;
 
 
-    public void OnTriggerEnter()
+    public void OnTriggerEnter(Collider other)
     {
-        LapComplete.lapsDone++;
-        lapCompleteTrigger.SetActive(true);
-        halfPointTrigger.SetActive(false);
-        
+        if (other.CompareTag("Player"))
+        {
+            LapComplete.lapsDone++;
+            lapCompleteTrigger.SetActive(true);
+            halfPointTrigger.SetActive(false);
+        }              
     }
 
     public void Update()
