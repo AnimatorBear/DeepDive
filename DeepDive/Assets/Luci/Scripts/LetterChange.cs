@@ -8,13 +8,13 @@ using UnityEngine.SceneManagement;
 
 public class LetterChange : MonoBehaviour
 {
-    public TextMeshProUGUI[] textMeshes; 
-    private int currentTextIndex = 0; 
+    public TextMeshProUGUI[] textMeshes;
+    private int currentTextIndex = 0;
     private char[] currentLetters = new char[3];
-    private float scrollSpeed = 0.5f; 
-    public bool scrolling = false; 
+    private float scrollSpeed = 0.5f;
+    public bool scrolling = false;
     public bool nameConfirmed = false;
-    private bool AlreadyBlinked = false;
+    private bool alreadyBlinked = false;
     BlinkingLetter blscript;
     public GameObject confirmui;
     public TMP_Text confirmuitext;
@@ -23,8 +23,8 @@ public class LetterChange : MonoBehaviour
 
     void Start()
     {
-        playerInput = FindAnyObjectByType<PlayerInput>();
-        confirmui.SetActive(false);   
+        playerInput = FindObjectOfType<PlayerInput>();
+        confirmui.SetActive(false);
         for (int i = 0; i < currentLetters.Length; i++)
         {
             currentLetters[i] = 'A';
@@ -36,28 +36,33 @@ public class LetterChange : MonoBehaviour
 
     void Update()
     {
-        if (!AlreadyBlinked)
+        if (!alreadyBlinked)
         {
-            AlreadyBlinked = true;
+            alreadyBlinked = true;
             blscript.PlayerActive(false);
         }
+
         if (nameConfirmed)
         {
-            print("Yo!");
+            StopBlinking();
+            PlayerPrefs.SetString("CurrentPlayerName", string.Concat(currentLetters));
+            Debug.Log("Player Name: " + PlayerPrefs.GetString("CurrentPlayerName"));
+            SceneManager.LoadScene("Merge");
             nameConfirmed = false;
             return;
         }
+
         float movin = playerInput.actions["GasBrake"].ReadValue<float>();
         if (movin > 0 && !scrolling)
         {
             blscript.PlayerActive(true);
-            AlreadyBlinked = false;
+            alreadyBlinked = false;
             ScrollLetters(1);
         }
         else if (movin < 0 && !scrolling)
         {
             blscript.PlayerActive(true);
-            AlreadyBlinked = false;
+            alreadyBlinked = false;
             ScrollLetters(-1);
         }
         else if (playerInput.actions["EnterName"].triggered && !nameConfirmed)
@@ -68,6 +73,7 @@ public class LetterChange : MonoBehaviour
                 isConfirming = false;
                 return;
             }
+
             if (!scrolling)
             {
                 if (currentTextIndex == textMeshes.Length - 1 && !nameConfirmed)
@@ -82,58 +88,52 @@ public class LetterChange : MonoBehaviour
                     LockLetterAndMoveToNext();
                 }
             }
-            else if (nameConfirmed)
-            {
-                Debug.Log("Name confirmed: " + GetCurrentName());
-            }
         }
         else if (playerInput.actions["BackName"].triggered && !nameConfirmed)
         {
+            StopBlinking();
+
             if (isConfirming)
             {
                 Debug.Log("Name canceled!");
+                currentTextIndex = 0;
+                currentLetters[currentTextIndex] = currentLetters[currentTextIndex];
+                blscript.currentText = textMeshes[currentTextIndex];
                 nameConfirmed = false;
                 isConfirming = false;
+                blscript.enabled = true;
                 confirmui.SetActive(false);
-                currentTextIndex = 0;
                 return;
             }
+
+            MoveToPreviousLetter();
         }
-        
     }
 
     void ScrollLetters(int direction)
     {
         char targetLetter = (char)(currentLetters[currentTextIndex] + direction);
+        scrollSpeed = 0.5f;
 
         if (targetLetter > 'Z')
         {
-            print("switch to a");
-            scrollSpeed = 0;
             targetLetter = 'A';
+            scrollSpeed = 0;
         }
         else if (targetLetter < 'A')
         {
-            print("Switch to z");
-            scrollSpeed = 0;
             targetLetter = 'Z';
+            scrollSpeed = 0;
         }
-        else
-        {
-            scrollSpeed = 0.5f;
-        }
-       
         StartCoroutine(ScrollToLetter(targetLetter));
     }
 
     IEnumerator ScrollToLetter(char targetLetter)
     {
         scrolling = true;
-        
 
         while (currentLetters[currentTextIndex] != targetLetter)
         {
-            
             if (currentLetters[currentTextIndex] < targetLetter)
             {
                 currentLetters[currentTextIndex]++;
@@ -142,10 +142,10 @@ public class LetterChange : MonoBehaviour
             {
                 currentLetters[currentTextIndex]--;
             }
-            print(targetLetter);
-            UpdateText(currentTextIndex); 
 
-            yield return new WaitForSeconds(scrollSpeed); 
+            UpdateText(currentTextIndex);
+
+            yield return new WaitForSeconds(scrollSpeed);
         }
 
         scrolling = false;
@@ -154,27 +154,23 @@ public class LetterChange : MonoBehaviour
     void LockLetterAndMoveToNext()
     {
         currentTextIndex++;
-        blscript.currentText = textMeshes[currentTextIndex];
         if (currentTextIndex >= textMeshes.Length)
         {
-            currentTextIndex = 0; 
+            currentTextIndex = 0;
         }
+
+        blscript.currentText = textMeshes[currentTextIndex];
     }
 
     void MoveToPreviousLetter()
     {
-        char previousLetter = currentLetters[currentTextIndex];
-
-        if (previousLetter == 'A')
+        currentTextIndex--;
+        if (currentTextIndex < 0)
         {
-            previousLetter = 'Z';
-        }
-        else if (previousLetter == 'Z')
-        {
-            previousLetter = 'A';
+            currentTextIndex = textMeshes.Length - 1;
         }
 
-        StartCoroutine(ScrollToLetter(previousLetter));
+        blscript.currentText = textMeshes[currentTextIndex];
     }
 
     void UpdateText(int index)
@@ -185,15 +181,21 @@ public class LetterChange : MonoBehaviour
     void ConfirmName()
     {
         isConfirming = true;
-        confirmuitext.text = "Your name is " + string.Concat(currentLetters) + " Are you sure you want this as your name?";
+        blscript.StopBlinking();
+        confirmuitext.text = "Your name is " + string.Concat(currentLetters) + ". Are you sure you want this as your name?";
         confirmui.SetActive(true);
-        Debug.Log("Name: " + GetCurrentName() + ". Press Enter again to confirm.");    
-    }
-
+        Debug.Log("Name: " + GetCurrentName() + ". Press Enter again to confirm.");
+        blscript.enabled = false;
+        for (int i = 0; i < textMeshes.Length; i++)
+        {
+            textMeshes[i].enabled = true;
+        }
+    } 
     string GetCurrentName()
     {
         return string.Concat(currentLetters);
     }
+
     void StopBlinking()
     {
         if (blscript != null && blscript.currentText != null)
