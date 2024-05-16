@@ -16,7 +16,6 @@ public class CarUI : MonoBehaviour
     public float[] maxSpeedArrowAngle;
 
     [Header("UI")]
-    public TMP_Text speedLabel;
     public RectTransform arrow;
     public TMP_Text gearLabel;
 
