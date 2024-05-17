@@ -104,4 +104,13 @@ public class SaveTime : MonoBehaviour
             return true;
         }
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+    public void ChangeScene(string scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
 }

@@ -69,7 +69,7 @@ public class LapComplete : MonoBehaviour
                 float mil = float.Parse(best.Split(':')[2]);
 				print(min + ":" + sec + ":" + mil + " !Best");
 				print(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount + " !New");
-                if (min > LapTimeManager.minuteCount)
+                if (min < LapTimeManager.minuteCount)
                 {
                     SaveTime.instance.SetTime(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
                     SaveTime.instance.SetName("Unnamed");
@@ -78,7 +78,7 @@ public class LapComplete : MonoBehaviour
                 }
 				else
 				{
-                    if (sec > LapTimeManager.secondCount)
+                    if (sec < LapTimeManager.secondCount)
                     {
                         SaveTime.instance.SetTime(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
                         SaveTime.instance.SetName("Unnamed");
@@ -87,7 +87,7 @@ public class LapComplete : MonoBehaviour
                     }
                     else
                     {
-                        if (mil > LapTimeManager.milliCount)
+                        if (mil < LapTimeManager.milliCount)
                         {
                             SaveTime.instance.SetTime(LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount);
                             SaveTime.instance.SetName("Unnamed");
@@ -140,4 +140,6 @@ public class LapComplete : MonoBehaviour
         milliDisplay.GetComponent<Text>().text = "" + LapTimeManager.milliCount;
         bestLap = LapTimeManager.minuteCount + ":" + LapTimeManager.secondCount + ":" + LapTimeManager.milliCount;
     }
+
+
 }

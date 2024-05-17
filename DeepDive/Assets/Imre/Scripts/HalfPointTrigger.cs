@@ -38,6 +38,7 @@ public class HalfPointTrigger : MonoBehaviour
             Finish.SetActive(true);
             Player.GetComponent<CartTest>().enabled = false;
             FindAnyObjectByType<EventSystem>().SetSelectedGameObject(timeButton);
+            LapComplete.lapsDone = 0;
         }
     }
     public void Start()
